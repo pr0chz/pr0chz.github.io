@@ -311,7 +311,7 @@ f.foreach(println)
 val f2 = f.map(_ * 2)
 {% endhighlight %}
 
-Both callbacks will be executed concurrently with each other once `f` is completed.
+Both callbacks will be executed concurrently once `f` is completed (in no particular order).
 
 ### Error handling
 
