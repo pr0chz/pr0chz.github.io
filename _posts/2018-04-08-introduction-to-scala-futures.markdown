@@ -145,7 +145,9 @@ This is not very comprehensible. Moreover it would be beneficial if we could pro
 That is the point where `Future.flatMap` method comes into play:
 
 {% highlight scala %}
-def flatMap[S](f: (T) ⇒ Future[S])(implicit executor: ExecutionContext): Future[S]
+class Future[T] {
+  def flatMap[S](f: (T) ⇒ Future[S])(implicit executor: ExecutionContext): Future[S]
+}
 {% endhighlight %}
 
 `flatMap` is useful for chaining and ordering `Future`s one after another, effectively making the operations
@@ -176,11 +178,13 @@ val eventsFuture: Future[Int] = repo.getCurrentRevision()
   .map(list => list.size)
 {% endhighlight %}
 
-`map` behaves similarly to `flatMap` regarding success and failure handling and does exactly what you would expect
- from it - maps a value contained in a `Future` to some other value of possibly other type:
+`map` behaves similarly to `flatMap` regarding success and failure handling and behaves exactly as how you would 
+expect - it maps a value contained in a `Future` to some other value of possibly other type:
   
 {% highlight scala %}
-def map[S](f: (T) ⇒ S)(implicit executor: ExecutionContext): Future[S]
+class Future[T] {
+  def map[S](f: (T) ⇒ S)(implicit executor: ExecutionContext): Future[S]
+}
 {% endhighlight %}  
   
 Since we are using just `map` and `flatMap`, we can make our code even nicer by using `for` comprehension:
